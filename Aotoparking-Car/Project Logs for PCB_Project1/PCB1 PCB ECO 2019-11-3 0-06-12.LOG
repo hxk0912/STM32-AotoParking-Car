@@ -1,0 +1,65 @@
+Added Component: Designator=12V(HDR1X2)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "LatestRevisionDate"; Value = "17-Jul-2002"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LatestRevisionNote"; Value = "Re-released for DXP Platform."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Added Component: Designator=MotorA(HDR1X6)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "LatestRevisionDate"; Value = "17-Jul-2002"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LatestRevisionNote"; Value = "Re-released for DXP Platform."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Added Component: Designator=MotorB(HDR1X6)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "LatestRevisionDate"; Value = "17-Jul-2002"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LatestRevisionNote"; Value = "Re-released for DXP Platform."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Added Component: Designator=OpenMV(HDR1X4)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "LatestRevisionDate"; Value = "17-Jul-2002"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LatestRevisionNote"; Value = "Re-released for DXP Platform."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Added Component: Designator=OUT(HDR2X4)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "LatestRevisionDate"; Value = "17-Jul-2002"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LatestRevisionNote"; Value = "Re-released for DXP Platform."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Added Component: Designator=switch(HDR1X3)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "LatestRevisionDate"; Value = "17-Jul-2002"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LatestRevisionNote"; Value = "Re-released for DXP Platform."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=+12 Pin=12V-1
+Added Pin To Net: NetName=GND Pin=12V-2
+Added Pin To Net: NetName=A01 Pin=MotorA-1
+Added Pin To Net: NetName=+5 Pin=MotorA-2
+Added Pin To Net: NetName=1A Pin=MotorA-3
+Added Pin To Net: NetName=1B Pin=MotorA-4
+Added Pin To Net: NetName=GND Pin=MotorA-5
+Added Pin To Net: NetName=A02 Pin=MotorA-6
+Added Pin To Net: NetName=B02 Pin=MotorB-1
+Added Pin To Net: NetName=+5 Pin=MotorB-2
+Added Pin To Net: NetName=2A Pin=MotorB-3
+Added Pin To Net: NetName=2B Pin=MotorB-4
+Added Pin To Net: NetName=GND Pin=MotorB-5
+Added Pin To Net: NetName=B01 Pin=MotorB-6
+Added Pin To Net: NetName=GND Pin=OpenMV-1
+Added Pin To Net: NetName=OpenMV_TX Pin=OpenMV-2
+Added Pin To Net: NetName=OpenMV_RX Pin=OpenMV-3
+Added Pin To Net: NetName=+5 Pin=OpenMV-4
+Added Pin To Net: NetName=GND Pin=OUT-1
+Added Pin To Net: NetName=O2 Pin=OUT-2
+Added Pin To Net: NetName=+5 Pin=OUT-3
+Added Pin To Net: NetName=O3 Pin=OUT-4
+Added Pin To Net: NetName=VCC Pin=OUT-5
+Added Pin To Net: NetName=O4 Pin=OUT-6
+Added Pin To Net: NetName=O1 Pin=OUT-7
+Added Pin To Net: NetName=O5 Pin=OUT-8
+Added Pin To Net: NetName=+5 Pin=switch-1
+Added Pin To Net: NetName=VIN Pin=switch-2
+Added Member To Class: ClassName=Sheet1 Member=Component 12V Header 2
+Added Member To Class: ClassName=Sheet1 Member=Component MotorA Header 6
+Added Member To Class: ClassName=Sheet1 Member=Component MotorB Header 6
+Added Member To Class: ClassName=Sheet1 Member=Component OpenMV Header 4
+Added Member To Class: ClassName=Sheet1 Member=Component OUT Header 4X2
+Added Member To Class: ClassName=Sheet1 Member=Component switch Header 3
+Added Room: Name=Sheet1

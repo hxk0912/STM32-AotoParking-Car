@@ -1,0 +1,253 @@
+/*
+ *********************************************************************************************************
+ *
+ *                           硬石YS-F1Pro开发板开发环境说明
+ *
+ * 
+ *********************************************************************************************************
+ */
+
+【1】CPU内部资源
+	CPU型号        : STM32F103ZET6 / LQFP-144 / ARM 32-bit Cortex-M3
+	主频           : 72MHz
+	内部Flash容量  : 512KB
+	内部SRAM容量   : 64KB
+	定时器         : 11个
+	UART           : 5个
+	SPI            : 3个 (2个可复用为I2S)
+	I2C            : 2个
+	ADC            : 3个独立的12位ADC
+	DAC            : 2路独立12位DAC
+	CAN            : 1个 CAN 2.0B
+	SDIO           : 1个
+	USB            : USB2.0全速(从机)无需外部PHY。
+
+【2】FSMC存储器地址分配
+   	CPU内部 FLASH  【0x0800 0000 - 0x080F FFFF】,容量512K(0x80000)字节
+	CPU内部 SRAM1  【0x2000 0000 - 0x2000 FFFF】,容量64K(0x10000)字节
+	
+	外部扩展SRAM   【0x6800 0000 - 0x681F FFFF】,容量1M(0x100000)字节
+	TFT LCD地址    【0x6C00 0000,  0x6C00 0002】, 仅占用2个端口地址
+
+【3】I2C总线外设地址分配
+  序号	器件                      地址
+	1	串行EEPROM  AT24C02 	  0xA0
+
+
+【4】开发工具
+    【仿真器】 --- 非标配，单独选购
+	虽然STM32支持串口ISP下载程序，但是不支持在线调试。使用串口下载，开发效率极低，因此强烈推荐购买一个仿真
+	器，提高开发效率。
+	- ST-LINK V2 仿真器: ST公司开发的仿真器，可以下载程序和调试跟踪程序。支持STM8和STM32。
+	- J-LINK V8,V9仿真器 : Segger公司开发的仿真器，可以下载程序和调试跟踪程序。支持所有ARM系列。
+    - CMSIS-DAP仿真器：ARM开源仿真器，可以下载程序和调试跟踪程序。支持所有ARM-M系列。
+    【Mini USB线】--- 开发板配送
+	- 开发板预留两个Mini USB接口，一个通过CH340芯片通过跳线帽选择接在stm32芯片USART1接口上，可用于大部分程序打印调试信息，
+	也可用于ISP下载。
+    -开发板上另外一个Mini USB接口用于USB Driver，模拟U盘时可用。
+
+    【开发软件】
+	- 编译环境 KEIL 的 MDK uVision5.17
+
+
+【5】编译和调试方法
+
+	【Keil MDK】V5.17
+		- 执行菜单 Project -> Open project                                打开 \MDK-ARM\YS-F1Pro.uvprojx （这是工程文件）
+ 		- 执行菜单 Project -> Rebuild all target files                    重新编译所有的文件:
+ 		- 执行菜单 Flash -> Download (F8)                                 下载程序到开发板运行
+	【IAR】V7.50.2
+		- 执行菜单 File -> Open -> Workspace                               打开 \EWARM\YS-F1Pro.eww （这是工程工作平台文件）
+ 		- 执行菜单 Project -> Rebuild all                                  重新编译所有的文件:
+ 		- 执行菜单 Project -> Download and Debug(Ctrl+D)                   装载程序并启动调试
+【6】例程文件夹说明
+├─Drivers :   存放第3方提供的库或其源代码，这些代码一般是成熟的并经过验证的代码。
+│  ├─CMSIS :  CMSIS是ARM公司与多家不同的芯片和软件供应商一起紧密合作定义的，提供了内核与外设、实时操作系统和中间设备之间的通用接口。
+│  └─STM32F1xx_HAL_Driver : STM32F1xx系列MCU的硬件抽象层(HAL)库源代码
+│
+├─EWARM    :  IAR编译器工程文件夹
+│
+├─Inc      :  这里存放用户任务程序相关头文件
+│  └─bsp  :  外设模块底层驱动头文件
+│
+├─MDK-ARM  :  Keil编译器工程文件夹
+│
+├─Readme   :  工程相关说明
+│
+└─Src      :  这里存放用户任务程序C语音源文件
+    └─bsp  :  外设模块底层驱动源文件
+
+【7】工程中源代码分组说明
+IAR编译环境
+└─YS-F1PRO                        : 工程名称
+   ├─Application                  : 应用程序
+   │    ├─bsp                    : 板级支持包，存放模块底层驱动函数 
+   │    ├─EWARM                  : 启动文件(汇编源程序)
+   │    └─User                   : 存放 main.c 以及用户用用程序
+   │
+   ├─Drivers                      : 驱动程序
+   │    ├─CMSIS                  : 仅存放CMSISI接口文件 system_stm32f1xx.c)
+   │    └─STM32F1xx_HAL_Driver   : 存放STM32F1xx系列MCU的HAL库源代码
+   │
+   ├─Readme                       : 工程说明文档，仅限txt文件
+   └─Output                       : 工程编译输出文件
+   
+Keil编译环境
+└─YS-F1PRO                        : Target名称
+   ├─Application/MDK-ARM          : 启动文件(汇编源程序)
+   ├─Drivers/CMSIS                : 仅存放CMSISI接口文件 system_stm32f1xx.c
+   ├─Drivers/STM32F1xx_HAL_Driver : 存放STM32F1xx系列MCU的HAL库源代码
+   ├─Application/User             : 存放 main.c 以及用户用用程序   
+   ├─bsp                          : 板级支持包，存放模块底层驱动函数  
+   └─Readme                       : 工程说明文档，仅限txt文件
+
+【8】公共源代码文件说明
+	- main.c          : 用户主程序，存放main()函数的文件
+	- stm32f1xx_it.c  : 集中存放中断服务程序
+
+【9】C编译器中的预定义宏 （在工程设置中更改）
+	USE_HAL_DRIVER        - 增加这个符号表示使用ST公司的HAL库外设驱动
+	VECT_TAB_SRAM         - 增加这个符号表示中断向量表定位在CPU内部RAM （针对在CPU内部RAM运行的工程才需要添加，一般都不用）
+	STM32F103xE           - 增加这个符号表示使用STM32F103xE系列芯片
+
+【10】调整堆和栈的容量
+	对于IAR EWARM, 直接在工程设置中进行修改即可
+		- 菜单 project -> options -> 选择Linker -> Config页 -> 点Edit按钮 -> 切换到Stack/Heap Size
+		比如：
+			CSTACK = 0x1000
+			HEAP   = 0x400		
+		
+	对于KEIL MDK, 设置堆和栈的大小是通过修改启动文件start_stm32f10x_hd.s 文件实现的，比如：
+		Stack_Size      EQU     0x00000400
+		Heap_Size       EQU     0x00000200
+
+【11】输出目标文件
+    对于IAR EWARM:
+	\EWARM\YS-F1Pro\Exe\YS-F1PRO.hex  - 采用IAR EWARM编译好的文件	
+    
+    对于KEIL MDK:
+	\MDK-ARM\YS-F1Pro\YS-F1PRO.hex  - 采用KEIL MDK编译好的文件，定位在CPU 内部Flash	
+	\MDK-ARM\YS-F1Pro\YS-F1PRO.map  - 这是编译链接文件，文本格式，可以查看每个函数、变量的地址和空间分配情况。
+
+【附录1】 YS-F1Pro开发板 GPIO分配表
+  按GPIO次序排列, 一共112个GPIO。GPIOA – GPIOG 每组16根。
+    PA0/WKUP                                    WKUP按钮 -- KEY1按键
+    PA1/TOUCHKEY                                电容按键
+    PA2/USART2_TXD                              串口2发送，默认连接WiFi(ESP8266)模块，可选连接蓝牙HC-05、GPS、GSM模块
+    PA3/USART2_RXD                              串口2接收，默认连接WiFi(ESP8266)模块，可选连接蓝牙HC-05、GPS、GSM模块
+    PA4/SPIFLASH_CS                             串行FLASH片选引脚
+    PA5/SPI1_SCK						        SPI总线（串行Flash）时钟
+    PA6/SPI1_MISO                               SPI总线（串行Flash）MISO，
+    PA7/SPI1_MOSI                               SPI总线（串行Flash）MOSI
+    PA8/TIM1_CH1                                定时器功能引脚，直流电机控制
+    PA9/USART1_TX                               串口1发送，调试串口/定时器功能引脚，直流电机控制
+    PA10/USART1_RX                              串口1接收，调试串口/定时器功能引脚，直流电机控制
+    PA11/USBDM                                  全速(12Mbps)USB接口数据线D-
+    PA12/USBDP                                  全速(12Mbps)USB接口数据线D+
+    PA13/JTMS-SWDIO                             SWD调试接口数据线
+    PA14/JTCK-SWCLK                             SWD调试接口时钟线
+    PA15/SteeringEngine                         定时器功能引脚，预留用于控制舵机
+
+    PB0/LED1                                    LED1/定时器功能引脚，直流电机控制
+    PB1/IR_RX                                   红外接收管/定时器功能引脚，直流电机控制
+    PB2-BOOT1/RS485_TXEN                        BOOT1/RS485发送使能
+    PB3/JTDO-SWO/SPI3_SCK                       SWD调试接口/SPI3时钟线(默认连接W5500，可选接音频模块、NRF24L01+模块)
+    PB4/SPI3_MISO                               SPI3数据线(默认连接W5500，可选接音频模块、NRF24L01+模块)
+    PB5/SPI3_MOSI                               SPI3数据线(默认连接W5500，可选接音频模块、NRF24L01+模块)
+    PB6/I2C1_SCL                                I2C1串行时钟控制
+    PB7/I2C1_SDA                                I2C1串行数据控制
+    PB8/CANRX                                   CAN接收
+    PB9/CANTX                                   CAN发送
+    PB10/USART3_TX                              串口3发送，默认接RS232芯片，可接RS485收发芯片
+    PB11/USART3_RX                              串口3接收，默认接RS232芯片，可接RS485收发芯片
+    PB12/TIM1_BKIN                              定时器功能引脚，直流电机控制
+    PB13/TIM1_CH1N                              定时器功能引脚，直流电机控制
+    PB14/TIM1_CH2N                              定时器功能引脚，直流电机控制
+    PB15/TIM1_CH3N                              定时器功能引脚，直流电机控制
+
+    PC0/ADC123_IN10/OV_D0                       ADC输入/摄像头数据线
+    PC1/ADC123_IN11/OV_D1                       ADC输入/摄像头数据线
+    PC2/ADC123_IN12/OV_D2                       ADC输入/摄像头数据线
+    PC3/ADC123_IN13/OV_D3                       ADC输入/摄像头数据线
+    PC4/ADC12_IN14/OV_D4                        ADC输入/摄像头数据线
+    PC5/ADC12_IN15/OV_D5                        ADC输入/摄像头数据线
+    PC6/OV_D6                                   摄像头数据线
+    PC7/OV_D7                                   摄像头数据线
+    PC8/SDIO_D0                                 SDIO数据线D0
+    PC9/SDIO_D1                                 SDIO数据线D1
+    PC10/SDIO_D2                                SDIO数据线D2
+    PC11/SDIO_D3                                SDIO数据线D3
+    PC12/SDIO_CK                                SDIO时钟
+    PC13/TAMPER                                 KEY2按键
+    PC14-OSC32_IN                               32768Hz时钟输入
+    PC15-OSC32_OUT                              32768Hz时钟输出
+
+    PD0/FSMC_D2                                 FSMC数据总线D2
+    PD1/FSMC_D3                                 FSMC数据总线D3
+    PD2/SDIO_CMD/TIM3_ETR                       SDIO命令/定时器功能引脚，直流电机控制
+    PD3/FIFO_WRST/DHT11                         摄像头功能引脚/温湿度传感器引脚
+    PD4/FSMC_NOE                                FSMC控制总线读信号（N表示低有效，OE = Output Enable）
+    PD5/FSMC_NWE                                FSMC控制总线写信号（N表示低有效，WE = Write Enable）
+    PD6/WIFI_EN                                 WiFi(ESP8266)模块使能引脚
+    PD7/BEEP                                    蜂鸣器
+    PD8/FSMC_D13                                FSMC数据总线D13
+    PD9/FSMC_D14                                FSMC数据总线D14
+    PD10/FSMC_D15                               FSMC数据总线D15
+    PD11/FSMC_A16                               FSMC地址总线A16
+    PD12/FSMC_A17                               FSMC地址总线A17
+    PD13/FSMC_A18                               FSMC地址总线A18
+    PD14/FSMC_D0                                FSMC数据总线D0
+    PD15/FSMC_D1                                FSMC数据总线D1
+
+    PE0/FSMC_NBL0                               FSMC字节选择信号，用于SRAM
+    PE1/FSMC_NBL1                               FSMC字节选择信号，用于SRAM
+    PE2/TP_NIRQ                                 电阻触摸屏中断
+    PE3/TP_SCK                                  电阻触摸屏时钟线
+    PE4/TP_MOSI                                 电阻触摸屏数据线
+    PE5/TP_MISO                                 电阻触摸屏数据线
+    PE6/TP_CS                                   电阻触摸屏片选
+    PE7/FSMC_D4                                 FSMC数据总线D4
+    PE8/FSMC_D5                                 FSMC数据总线D5
+    PE9/FSMC_D6                                 FSMC数据总线D6
+    PE10/FSMC_D7                                FSMC数据总线D7
+    PE11/FSMC_D8                                FSMC数据总线D8
+    PE12/FSMC_D9                                FSMC数据总线D9
+    PE13/FSMC_D10                               FSMC数据总线D10
+    PE14/FSMC_D11                               FSMC数据总线D11
+    PE15/FSMC_D12                               FSMC数据总线D12
+
+    PF0/FSMC_A0                                 FSMC地址总线A0
+    PF1/FSMC_A1                                 FSMC地址总线A1
+    PF2/FSMC_A2                                 FSMC地址总线A2
+    PF3/FSMC_A3                                 FSMC地址总线A3
+    PF4/FSMC_A4                                 FSMC地址总线A4
+    PF5/FSMC_A5                                 FSMC地址总线A5
+    PF6/FIFO_RCLK                               摄像头功能引脚
+    PF7/FIFO_WEN                     	        摄像头功能引脚
+    PF8/NRF_IRQ                                 NRF24L01+模块中断
+    PF9/NRF_CS                                  NRF24L01+模块功能引脚
+    PF10/LCD_BL                                 液晶背光
+    PF11/HC-05_EN/NRF_SPI_CS                    蓝牙HC-05模块使能/NRF24L01+模块片选
+    PF12/FSMC_A6                                FSMC地址总线A6
+    PF13/FSMC_A7                                FSMC地址总线A7
+    PF14/FSMC_A8                                FSMC地址总线A8
+    PF15/FSMC_A9                                FSMC地址总线A
+    
+    PG0/FSMC_A10                                FSMC地址总线A10
+    PG1/FSMC_A11                                FSMC地址总线A11
+    PG2/FSMC_A12                                FSMC地址总线A12
+    PG3/FSMC_A13                                FSMC地址总线A13
+    PG4/FSMC_A14                                FSMC地址总线A14
+    PG5/FSMC_A15                                FSMC地址总线A15
+    PG6/ULN2003_IN1/LED2                        步进电机驱动通道1/LED2
+    PG7/ULN2003_IN2/LED3                        步进电机驱动通道2/LED3
+    PG8/ULN2003_IN3                             步进电机驱动通道3
+    PG9/ULN2003_IN4                             步进电机驱动通道4
+    PG10/FSMC_NE3                               FSMC总线片选NE3
+    PG11/OV_VSYNC                               摄像头功能引脚
+    PG12/FSMC_NE4                               FSMC总线片选NE4
+    PG13/USBD_ENBLE                             USB设备使能    
+    PG14/FIFO_RRST                              摄像头功能引脚
+    PG15/FIFO_OE                                摄像头功能引脚
+
+	
